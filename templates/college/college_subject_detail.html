@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>{{ subject.name }}</h1>
+<p>Old Papers and Solutions:</p>
+
+<div style="display: grid; gap: 12px;">
+{% for d in documents %}
+  <div style="padding: 16px; background: #EDE9FE; border: 1px solid #C4B5FD; border-radius: 12px;">
+    <strong>{{ d.title }}</strong> — {{ d.doc_type }} — {{ d.year }}<br><br>
+    <a href="{{ d.pdf.url }}" target="_blank" style="background: #7C3AED; color: white; padding: 8px 16px; border-radius: 8px; text-decoration: none;">View</a>
+    <a href="{{ d.pdf.url }}" download style="background: white; color: #17191C; padding: 8px 16px; border: 1px solid #17191C; border-radius: 8px; text-decoration: none; margin-left: 8px;">Download</a>
+  </div>
+{% empty %}
+  <p>No papers or solutions yet.</p>
+{% endfor %}
+</div>
+
+<p style="margin-top: 20px;"><a href="/college/">Back to Universities</a></p>
+{% endblock %}

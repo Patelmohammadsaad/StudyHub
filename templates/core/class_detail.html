@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h1>{{ school_class.name }}</h1>
+<p>Subjects:</p>
+
+<div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 12px;">
+{% for s in subjects %}
+
+  <a href="{% url 'subject_detail' s.pk %}" style="display: block; padding: 16px; background: #EDE9FE; border: 1px solid #C4B5FD; border-radius: 12px; text-align: center; font-weight: bold; color: #17191C; text-decoration: none;">
+  {{ s.name }}
+  </a>
+
+{% empty %}
+  <p>No subjects yet.</p>
+{% endfor %}
+
+
+</div>
+
+<p style="margin-top: 20px;"><a href="/">Back to Classes</a></p>
+{% endblock %}
