@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-&#79gowek9lc$4%m-o@=v8$qp=ln!b*6d7tp4=o*kv_$9!$9c!
 DEBUG = True
 
 ALLOWED_HOSTS = []
-
+CSRF_TRUSTED_ORIGINS = ['https://padhoyaha.in', 'https://www.padhoyaha.in']
 
 # Application definition
 

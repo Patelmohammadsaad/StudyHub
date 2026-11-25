@@ -1,14 +1,20 @@
 {% extends 'base.html' %}
 {% block content %}
-<p><a href="/college/" style="background: #7C3AED; color: white; padding: 8px 16px; border-radius: 8px; text-decoration: none;">Go to College →</a></p>
+<style>
+body {
+  background: #EFF4FF !important;
+}
+</style>
+
+<p><a href="/college/" style="background: linear-gradient(135deg, #2563EB, #1E40AF); color: white; padding: 8px 16px; border-radius: 8px; text-decoration: none;">Go to College →</a></p>
 
 <h1>School</h1>
-<h2>Classes</h2>
+<h2>Standards</h2>
 <p>Select a class to view Old Papers and Books</p>
 
 <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 12px;">
 {% for c in classes %}
-  <a href="{% url 'class_detail' c.pk %}" style="display: block; padding: 16px; background: #EDE9FE; border: 1px solid #C4B5FD; border-radius: 12px; text-align: center; text-decoration: none; color: #17191C; font-weight: bold;">
+  <a href="{% url 'class_detail' c.pk %}" style="display: block; padding: 20px 16px; background: linear-gradient(135deg, #DBEAFE, #CFFAFE); border: 1px solid #C4B5FD; border-radius: 12px; text-align: center; text-decoration: none; color: #17191C; font-weight: bold; box-shadow: 0 2px 8px rgba(0,0,0,0.06);">
     {{ c.name }}
   </a>
 {% endfor %}

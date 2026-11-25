@@ -1,18 +1,23 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<p><a href="/school/" style="background: #7C3AED; color: white; padding: 8px 16px; border-radius: 8px; text-decoration: none;">Go to School →</a></p>
 
+<style>
+body {
+  background: var(--page-bg) !important;
+}
+</style>
+
+<p><a href="/school/" style="background: var(--blue-grad); color: white; padding: 8px 16px; border-radius: 8px; text-decoration: none;">Go to School →</a></p>
 
 <h1>College</h1>
 <p>Select a University to view Courses</p>
 
 <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 12px;">
 {% for u in universities %}
-  <a href="{% url 'university_detail' u.pk %}" style="display: block; padding: 16px; background: #EDE9FE; border: 1px solid #C4B5FD; border-radius: 12px; text-align: center; text-decoration: none; color: #17191C; font-weight: bold;">
+  <a href="{% url 'university_detail' u.pk %}" style="display: block; padding: 20px 16px; background: var(--grad2); border: 1px solid #C4B5FD; border-radius: 12px; text-align: center; text-decoration: none; color: #17191C; font-weight: bold; box-shadow: 0 2px 8px rgba(0,0,0,0.06);">
     {{ u.name }}
   </a>
 {% endfor %}
 </div>
 {% endblock %}
-

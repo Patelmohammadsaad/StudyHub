@@ -1,12 +1,18 @@
 {% extends 'base.html' %}
 
 {% block content %}
+<style>
+body {
+  background: var(--page-bg) !important;
+}
+</style>
+
 <h1>{{ university.name }}</h1>
 <p>Courses:</p>
 
 <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 12px;">
 {% for c in courses %}
-  <a href="{% url 'course_detail' c.pk %}" style="display: block; padding: 16px; background: #EDE9FE; border: 1px solid #C4B5FD; border-radius: 12px; text-align: center; font-weight: bold; color: #17191C; text-decoration: none;">
+  <a href="{% url 'course_detail' c.pk %}" style="display: block; padding: 20px 16px; background: var(--grad2); border: 1px solid #C4B5FD; border-radius: 12px; text-align: center; font-weight: bold; color: #17191C; text-decoration: none; box-shadow: 0 2px 8px rgba(0,0,0,0.06);">
   {{ c.name }}
   </a>
 

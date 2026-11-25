@@ -1,41 +1,77 @@
 {% extends 'base.html' %}
 
 {% block content %}
+<style>
+body {
+  background: #EFF4FF !important;
+}
+.hero {
+  background: linear-gradient(135deg, #17191C 0%, #312E81 60%, #7C3AED 100%);
+  color: white; border-radius: 16px; padding: 40px 24px;
+  text-align: center; margin-bottom: 32px;
+}
+.hero h1 { color: white; font-size: 34px; margin: 0 0 8px; }
+.hero p { color: #DDD6FE; font-size: 17px; margin: 0 0 20px; }
+.btn-violet { display: inline-block; background: #7C3AED; color: white; padding: 12px 24px; border-radius: 10px; text-decoration: none; font-weight: bold; margin-right: 8px; }
+.btn-white { display: inline-block; background: white; color: #17191C; padding: 12px 24px; border-radius: 10px; text-decoration: none; font-weight: bold; }
+.card { display: block; padding: 20px 16px; border-radius: 12px; text-align: center; text-decoration: none; color: #17191C; font-weight: bold; font-size: 18px; border: 1px solid rgba(255,255,255,0.6); box-shadow: 0 2px 8px rgba(0,0,0,0.06); }
+.grad1 { background: linear-gradient(135deg, #EDE9FE, #DBEAFE); }
+.grad2 { background: linear-gradient(135deg, #DBEAFE, #CFFAFE); }
+.grad3 { background: linear-gradient(135deg, #FEF3C7, #FDE68A); }
+.grad4 { background: linear-gradient(135deg, #FCE7F3, #EDE9FE); }
+</style>
 
+<!-- HERO -->
+<section class="hero">
+  <h1>Old Papers and Books, All in One Place</h1>
+  <p>School Standard and College — No Login, View and Download for Free</p>
+  
+  <a href="#school" class="btn-violet" style="margin: 6px;">School →</a>
+  <a href="#college" class="btn-white" style="margin: 6px;">College →</a>
+</section>
 
-
-<!-- SCHOOL SECTION - UPAR -->
-<section>
-  <section id="school">
-  <h2>Classes</h2>
-  <p>Select a class to view Old Papers and Books</p>
-
-  <!-- <input type="text" placeholder="Search papers, books..." style="width: 100%; padding: 12px; border: 1px solid #C4B5FD; border-radius: 10px; margin-bottom: 16px; box-sizing: border-box;"> -->
-
+<!-- SCHOOL SECTION -->
+<section id="school">
+  <h2>standard</h2>
+  <p>Select a Standard to view Old Papers and Books</p>
   <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 12px;">
   {% for c in classes %}
-    <a href="{% url 'class_detail' c.pk %}" style="display: block; padding: 16px; background: #EDE9FE; border: 1px solid #C4B5FD; border-radius: 12px; text-align: center; text-decoration: none; color: #17191C; font-weight: bold;">
+    <!-- <a href="{% url 'class_detail' c.pk %}" class="card {% cycle 'grad1' 'grad2' 'grad3' 'grad4' %}"> -->
+    <a href="{% url 'class_detail' c.pk %}" class="card grad2">
       {{ c.name }}
     </a>
   {% endfor %}
   </div>
 </section>
 
-
-
-<!-- COLLEGE SECTION - NEECHE -->
+<!-- COLLEGE SECTION -->
 <section id="college" style="margin-top: 40px;">
-  <h1>College</h1>
+  <h2>College</h2>
   <p>Select a university to view Old Papers and Books</p>
-
   <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 12px;">
   {% for u in universities %}
-    <a href="/college/" style="display: block; padding: 16px; background: #EDE9FE; border: 1px solid #C4B5FD; border-radius: 12px; text-align: center; text-decoration: none; color: #17191C; font-weight: bold;">
+    <a href="{% url 'university_detail' u.pk %}" class="card grad2">
       {{ u.name }}
     </a>
   {% endfor %}
   </div>
 </section>
 
+<!-- HOW IT WORKS -->
+<section style="margin-top: 40px; background: linear-gradient(135deg, #2563EB, #1E40AF); border-radius: 16px; padding: 24px;">  <h2 style="text-align: center; color: white;">How It Works</h2>
+  <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 16px; text-align: center;">
+    <div style="background: white; border: 1px solid #E5E7EB; border-radius: 12px; padding: 20px;">
+      <div style="font-size: 28px;">📚</div><b>1. Choose a Class</b><p>Pick your Class or University</p>
+    </div>
+    <div style="background: white; border: 1px solid #E5E7EB; border-radius: 12px; padding: 20px;">
+      <div style="font-size: 28px;">📄</div><b>2. Choose a Subject</b><p>Click on a Subject</p>
+    </div>
+    <div style="background: white; border: 1px solid #E5E7EB; border-radius: 12px; padding: 20px;">
+      <div style="font-size: 28px;">⬇️</div><b>3. View / Download</b><p>Open or download the Paper or Book</p>
+    </div>
+  </div>
+</section>
 
 {% endblock %}
+
+

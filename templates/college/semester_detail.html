@@ -1,17 +1,23 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<h1>Sem {{ semester.number }} — {{ semester.course.name }}</h1>
-<p>Subjects:</p>
+<style>
+body {
+  background: var(--page-bg) !important;
+}
+</style>
+
+<h1>{{ course.name }}</h1>
+<p>Semesters:</p>
 
 <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 12px;">
-{% for s in subjects %}
-  <a href="{% url 'college_subject_detail' s.pk %}" style="display: block; padding: 16px; background: #EDE9FE; border: 1px solid #C4B5FD; border-radius: 12px; text-align: center; font-weight: bold; color: #17191C; text-decoration: none;">
-  {{ s.name }}
+{% for s in semesters %}
+  <a href="{% url 'semester_detail' s.pk %}" style="display: block; padding: 20px 16px; background: var(--grad2); border: 1px solid #C4B5FD; border-radius: 12px; text-align: center; font-weight: bold; color: #17191C; text-decoration: none; box-shadow: 0 2px 8px rgba(0,0,0,0.06);">
+  Sem {{ s.number }}
   </a>
 
 {% empty %}
-  <p>No subjects yet.</p>
+  <p>No semesters yet.</p>
 {% endfor %}
 </div>
 
