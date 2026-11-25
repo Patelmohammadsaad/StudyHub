@@ -2,17 +2,40 @@
 
 {% block content %}
 
-<p><a href="/college/" style="background: #7C3AED; color: white; padding: 8px 16px; border-radius: 8px; text-decoration: none;">Go to College →</a></p>
 
 
-<h1>Classes 1 to 12</h1>
-<p>Select a class to view Old Papers and Books</p>
+<!-- SCHOOL SECTION - UPAR -->
+<section>
+  <section id="school">
+  <h2>Classes</h2>
+  <p>Select a class to view Old Papers and Books</p>
 
-<div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 12px;">
-{% for c in classes %}
-  <a href="{% url 'class_detail' c.pk %}" style="display: block; padding: 16px; background: #EDE9FE; border: 1px solid #C4B5FD; border-radius: 12px; text-align: center; text-decoration: none; color: #17191C; font-weight: bold;">
-    {{ c.name }}
-  </a>
-{% endfor %}
-</div>
+  <!-- <input type="text" placeholder="Search papers, books..." style="width: 100%; padding: 12px; border: 1px solid #C4B5FD; border-radius: 10px; margin-bottom: 16px; box-sizing: border-box;"> -->
+
+  <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 12px;">
+  {% for c in classes %}
+    <a href="{% url 'class_detail' c.pk %}" style="display: block; padding: 16px; background: #EDE9FE; border: 1px solid #C4B5FD; border-radius: 12px; text-align: center; text-decoration: none; color: #17191C; font-weight: bold;">
+      {{ c.name }}
+    </a>
+  {% endfor %}
+  </div>
+</section>
+
+
+
+<!-- COLLEGE SECTION - NEECHE -->
+<section id="college" style="margin-top: 40px;">
+  <h1>College</h1>
+  <p>Select a university to view Old Papers and Books</p>
+
+  <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 12px;">
+  {% for u in universities %}
+    <a href="/college/" style="display: block; padding: 16px; background: #EDE9FE; border: 1px solid #C4B5FD; border-radius: 12px; text-align: center; text-decoration: none; color: #17191C; font-weight: bold;">
+      {{ u.name }}
+    </a>
+  {% endfor %}
+  </div>
+</section>
+
+
 {% endblock %}

@@ -2,6 +2,8 @@ from django.shortcuts import render
 from django.shortcuts import get_object_or_404
 
 from .models import SchoolClass,Subject,Document
+from college.models import University
+
 
 #api
 from rest_framework.decorators import api_view
@@ -11,10 +13,16 @@ from .serializers import SchoolClassSerializer
 
 
 # Home View - Show Class 1 to 12
-def home(request):
-    classes = SchoolClass.objects.all().order_by('number')
-    return render(request, 'core/home.html', {'classes': classes})
 
+def home(request):
+    classes = SchoolClass.objects.all()
+    universities = University.objects.all()
+    return render(request, 'core/home.html', {'classes': classes, 'universities': universities})
+
+
+def school_page(request):
+    classes = SchoolClass.objects.all()
+    return render(request, 'core/school.html', {'classes': classes})
 
 
 # Class Detail View - Show subjects of one class
