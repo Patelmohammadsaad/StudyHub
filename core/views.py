@@ -1,14 +1,14 @@
 from django.shortcuts import render
 from django.shortcuts import get_object_or_404
 
-from .models import SchoolClass, Subject, Chapter, Document
+from .models import SchoolClass,Subject,Document,Chapter,Paper
 from college.models import University
 
 
 # api
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
-from .serializers import SchoolClassSerializer, SubjectSerializer, DocumentSerializer
+from .serializers import SchoolClassSerializer, SubjectSerializer, DocumentSerializer, ChapterSerializer, PaperSerializer
 # Create your views here.
 
 
@@ -96,5 +96,27 @@ def api_subjects(request, pk):
 @api_view(['GET'])
 def api_documents(request, pk):
     documents = Document.objects.filter(subject_id=pk)
+    serializer = DocumentSerializer(documents, many=True)
+    return Response(serializer.data)
+
+
+# API Views - Chapters and Papers
+@api_view(['GET'])
+def api_chapters(request, pk):
+    chapters = Chapter.objects.filter(subject_id=pk).order_by('number')
+    serializer = ChapterSerializer(chapters, many=True)
+    return Response(serializer.data)
+
+
+@api_view(['GET'])
+def api_papers(request, pk):
+    papers = Paper.objects.filter(subject_id=pk)
+    serializer = PaperSerializer(papers, many=True)
+    return Response(serializer.data)
+
+
+@api_view(['GET'])
+def api_chapter_documents(request, pk):
+    documents = Document.objects.filter(chapter_id=pk)
     serializer = DocumentSerializer(documents, many=True)
     return Response(serializer.data)

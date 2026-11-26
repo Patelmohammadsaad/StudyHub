@@ -1,12 +1,11 @@
 from django.shortcuts import render
-from .models import University, Course, Semester, CollegeSubject, CollegeDocument, CollegeChapter, CollegePaper
+from .models import University,Course,Semester,CollegeSubject,CollegeDocument,CollegeChapter,CollegePaper
 
 from django.shortcuts import get_object_or_404
 
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
-from .serializers import UniversitySerializer, CourseSerializer, SemesterSerializer, CollegeSubjectSerializer, CollegeDocumentSerializer
-
+from .serializers import UniversitySerializer, CourseSerializer, SemesterSerializer, CollegeSubjectSerializer, CollegeDocumentSerializer, CollegeChapterSerializer, CollegePaperSerializer
 # Create your views here.
 
 # College Home View - Show Universities like GTU, HNGU
@@ -105,5 +104,27 @@ def api_college_subjects(request, pk):
 @api_view(['GET'])
 def api_college_documents(request, pk):
     documents = CollegeDocument.objects.filter(subject_id=pk)
+    serializer = CollegeDocumentSerializer(documents, many=True)
+    return Response(serializer.data)
+
+
+# API Views - Chapters and Papers
+@api_view(['GET'])
+def api_college_chapters(request, pk):
+    chapters = CollegeChapter.objects.filter(subject_id=pk).order_by('number')
+    serializer = CollegeChapterSerializer(chapters, many=True)
+    return Response(serializer.data)
+
+
+@api_view(['GET'])
+def api_college_papers(request, pk):
+    papers = CollegePaper.objects.filter(subject_id=pk)
+    serializer = CollegePaperSerializer(papers, many=True)
+    return Response(serializer.data)
+
+
+@api_view(['GET'])
+def api_college_chapter_documents(request, pk):
+    documents = CollegeDocument.objects.filter(chapter_id=pk)
     serializer = CollegeDocumentSerializer(documents, many=True)
     return Response(serializer.data)

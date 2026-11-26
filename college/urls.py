@@ -17,5 +17,8 @@ urlpatterns = [
     path('api/courses/<int:pk>/semesters/', views.api_semesters, name='api_semesters'),
     path('api/semesters/<int:pk>/subjects/', views.api_college_subjects, name='api_college_subjects'),
     path('api/subjects/<int:pk>/documents/', views.api_college_documents, name='api_college_documents'),
+    path('api/subjects/<int:pk>/chapters/', views.api_college_chapters, name='api_college_chapters'),
+    path('api/subjects/<int:pk>/papers/', views.api_college_papers, name='api_college_papers'),
+    path('api/chapters/<int:pk>/documents/', views.api_college_chapter_documents, name='api_college_chapter_documents'),
 
 ]
