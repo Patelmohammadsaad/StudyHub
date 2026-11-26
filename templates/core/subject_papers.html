@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<style>
+body {
+  background: var(--page-bg) !important;
+}
+</style>
+
+<h1>{{ subject.name }} - Papers</h1>
+
+<div style="display: grid; gap: 12px;">
+{% for d in papers %}
+  <div style="padding: 16px; background: var(--grad2); border: 1px solid #C4B5FD; border-radius: 12px;">
+    <strong>{{ d.title }}</strong> — {{ d.year }}<br><br>
+    <a href="{{ d.pdf.url }}" target="_blank" style="background: var(--blue-grad); color: white; padding: 8px 16px; border-radius: 8px; text-decoration: none;">View Paper</a>
+    {% if d.solution_pdf %}
+    <a href="{{ d.solution_pdf.url }}" target="_blank" style="background: white; color: #17191C; padding: 8px 16px; border: 1px solid #17191C; border-radius: 8px; text-decoration: none; margin-left: 8px;">View Solution</a>
+    {% endif %}
+  </div>
+{% empty %}
+  <p>No papers yet.</p>
+{% endfor %}
+</div>
+
+ <a href="{% url 'class_detail' subject.school_class.pk %}">Back to {{ subject.school_class.name }}</a>
+ 
+{% endblock %}

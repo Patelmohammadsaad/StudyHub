@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import SchoolClass, Subject, Document
+from .models import SchoolClass, Subject, Document,Chapter,Paper
 
 # Register your models here.
 
@@ -7,3 +7,5 @@ from .models import SchoolClass, Subject, Document
 admin.site.register(SchoolClass)
 admin.site.register(Subject)
 admin.site.register(Document)
+admin.site.register(Chapter)
+admin.site.register(Paper)

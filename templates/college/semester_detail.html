@@ -7,19 +7,20 @@ body {
 }
 </style>
 
-<h1>{{ course.name }}</h1>
-<p>Semesters:</p>
+<h1>Sem {{ semester.number }} — {{ semester.course.name }}</h1>
+<p>Subjects:</p>
 
-<div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 12px;">
-{% for s in semesters %}
-  <a href="{% url 'semester_detail' s.pk %}" style="display: block; padding: 20px 16px; background: var(--grad2); border: 1px solid #C4B5FD; border-radius: 12px; text-align: center; font-weight: bold; color: #17191C; text-decoration: none; box-shadow: 0 2px 8px rgba(0,0,0,0.06);">
-  Sem {{ s.number }}
-  </a>
-
+<div style="display: grid; gap: 12px;">
+{% for s in subjects %}
+  <div style="padding: 16px; background: var(--grad2); border: 1px solid #C4B5FD; border-radius: 12px;">
+    <strong>{{ s.name }}</strong><br><br>
+    <a href="{% url 'college_subject_chapters' s.pk %}" style="background: var(--blue-grad); color: white; padding: 8px 16px; border-radius: 8px; text-decoration: none;">Chapters</a>
+    <a href="{% url 'college_subject_papers' s.pk %}" style="background: white; color: #17191C; padding: 8px 16px; border: 1px solid #17191C; border-radius: 8px; text-decoration: none; margin-left: 8px;">Papers</a>
+  </div>
 {% empty %}
-  <p>No semesters yet.</p>
+  <p>No subjects yet.</p>
 {% endfor %}
 </div>
 
-<p style="margin-top: 20px;"><a href="/college/">Back to Universities</a></p>
+<p style="margin-top: 20px;"><a href="{% url 'course_detail' semester.course.pk %}">Back to Semesters</a></p>
 {% endblock %}

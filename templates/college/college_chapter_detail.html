@@ -7,20 +7,19 @@ body {
 }
 </style>
 
-<h1>{{ subject.name }}</h1>
-<p>Old Papers and Books:</p>
+<h1>Chapter {{ chapter.number }} - {{ chapter.name }}</h1>
+<p>{{ chapter.subject.name }}</p>
 
 <div style="display: grid; gap: 12px;">
 {% for d in documents %}
   <div style="padding: 16px; background: var(--grad2); border: 1px solid #C4B5FD; border-radius: 12px;">
     <strong>{{ d.title }}</strong> — {{ d.doc_type }} — {{ d.year }}<br><br>
     <a href="{{ d.pdf.url }}" target="_blank" style="background: var(--blue-grad); color: white; padding: 8px 16px; border-radius: 8px; text-decoration: none;">View</a>
-    <a href="{{ d.pdf.url }}" download style="background: white; color: #17191C; padding: 8px 16px; border: 1px solid #17191C; border-radius: 8px; text-decoration: none; margin-left: 8px;">Download</a>
   </div>
 {% empty %}
-  <p>No papers or books yet.</p>
+  <p>No books or questions yet.</p>
 {% endfor %}
 </div>
 
-<p style="margin-top: 20px;"><a href="/">Back to Classes</a></p>
+<p style="margin-top: 20px;"><a href="{% url 'college_subject_chapters' chapter.subject.pk %}">Back to Chapters</a></p>
 {% endblock %}

@@ -3,26 +3,24 @@
 {% block content %}
 <style>
 body {
-  background: #EFF4FF !important;
+  background: var(--page-bg) !important;
 }
 </style>
 
 <h1>{{ school_class.name }}</h1>
 <p>Subjects:</p>
 
-<div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 12px;">
+<div style="display: grid; gap: 12px;">
 {% for s in subjects %}
-
-  <a href="{% url 'subject_detail' s.pk %}" style="display: block; padding: 20px 16px; background: linear-gradient(135deg, #DBEAFE, #CFFAFE); border: 1px solid #C4B5FD; border-radius: 12px; text-align: center; font-weight: bold; color: #17191C; text-decoration: none; box-shadow: 0 2px 8px rgba(0,0,0,0.06);">
-  {{ s.name }}
-  </a>
-
+  <div style="padding: 16px; background: var(--grad2); border: 1px solid #C4B5FD; border-radius: 12px;">
+    <strong>{{ s.name }}</strong><br><br>
+    <a href="{% url 'subject_chapters' s.pk %}" style="background: var(--blue-grad); color: white; padding: 8px 16px; border-radius: 8px; text-decoration: none;">Chapters</a>
+    <a href="{% url 'subject_papers' s.pk %}" style="background: white; color: #17191C; padding: 8px 16px; border: 1px solid #17191C; border-radius: 8px; text-decoration: none; margin-left: 8px;">Papers</a>
+  </div>
 {% empty %}
   <p>No subjects yet.</p>
 {% endfor %}
-
-
 </div>
 
-<p style="margin-top: 20px;"><a href="/">Back to Classes</a></p>
+<p style="margin-top: 20px;"><a href="/school/">Back to Classes</a></p>
 {% endblock %}
