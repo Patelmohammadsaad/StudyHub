@@ -1,25 +1,24 @@
 {% extends 'base.html' %}
-
 {% block content %}
-<style>
-body {
-  background: var(--page-bg) !important;
-}
-</style>
+<style>body{background: var(--page-bg)!important;}</style>
 
 <h1>{{ course.name }}</h1>
-<p>Semesters:</p>
+<p>{{ course.university.name }}</p>
+<p>Subjects:</p>
 
-<div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 12px;">
-{% for s in semesters %}
-  <a href="{% url 'semester_detail' s.pk %}" style="display: block; padding: 20px 16px; background: var(--grad2); border: 1px solid #C4B5FD; border-radius: 12px; text-align: center; font-weight: bold; color: #17191C; text-decoration: none; box-shadow: 0 2px 8px rgba(0,0,0,0.06);">
-  Sem {{ s.number }}
-  </a>
-
+<div style="display: grid; gap: 12px;">
+{% for s in subjects %}
+  <div style="padding: 16px; background: var(--grad2); border: 1px solid #C4B5FD; border-radius: 12px;">
+    <strong>{{ s.name }}</strong><br><br>
+    <a href="{% url 'course_books' s.pk %}" style="background: var(--blue-grad); color: white; padding: 8px 16px; border-radius: 8px; text-decoration: none;">Book</a>
+    <a href="{% url 'course_notes' s.pk %}" style="background: var(--blue-grad); color: white; padding: 8px 16px; border-radius: 8px; text-decoration: none; margin-left: 8px;">Note</a>
+    <a href="{% url 'course_papers' s.pk %}" style="background: var(--blue-grad); color: white; padding: 8px 16px; border-radius: 8px; text-decoration: none; margin-left: 8px;">Old Paper</a>
+  </div>
 {% empty %}
-  <p>No semesters yet.</p>
+  <p>No subjects yet.</p>
 {% endfor %}
 </div>
 
-<p style="margin-top: 20px;"><a href="/college/">Back to Universities</a></p>
+<p style="margin-top: 20px;"><a href="{% url 'university_detail' course.university.pk %}">Back to Courses</a></p>
+
 {% endblock %}

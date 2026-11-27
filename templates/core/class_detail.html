@@ -14,8 +14,9 @@ body {
 {% for s in subjects %}
   <div style="padding: 16px; background: var(--grad2); border: 1px solid #C4B5FD; border-radius: 12px;">
     <strong>{{ s.name }}</strong><br><br>
-    <a href="{% url 'subject_chapters' s.pk %}" style="background: var(--blue-grad); color: white; padding: 8px 16px; border-radius: 8px; text-decoration: none;">Chapters</a>
-    <a href="{% url 'subject_papers' s.pk %}" style="background: white; color: #17191C; padding: 8px 16px; border: 1px solid #17191C; border-radius: 8px; text-decoration: none; margin-left: 8px;">Papers</a>
+    <a href="{% url 'subject_books' s.pk %}" style="background: var(--blue-grad); color: white; padding: 8px 16px; border-radius: 8px; text-decoration: none;">Book</a>
+    <a href="{% url 'subject_notes' s.pk %}" style="background: var(--blue-grad); color: white; padding: 8px 16px; border-radius: 8px; text-decoration: none; margin-left: 8px;">Note</a>
+    <a href="{% url 'subject_papers' s.pk %}" style="background: var(--blue-grad); color: white; padding: 8px 16px; border-radius: 8px; text-decoration: none; margin-left: 8px;">Paper</a>
   </div>
 {% empty %}
   <p>No subjects yet.</p>

@@ -1,78 +1,55 @@
-from django.shortcuts import render
-from .models import University,Course,Semester,CollegeSubject,CollegeDocument,CollegeChapter,CollegePaper
-
-from django.shortcuts import get_object_or_404
-
+from django.shortcuts import render, get_object_or_404, redirect
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
-from .serializers import UniversitySerializer, CourseSerializer, SemesterSerializer, CollegeSubjectSerializer, CollegeDocumentSerializer, CollegeChapterSerializer, CollegePaperSerializer
-# Create your views here.
+from .models import University, Course, CollegeSubject, CollegeBook, CollegePaper, CollegeNote
+from .serializers import UniversitySerializer, CourseSerializer, CollegeBookSerializer, CollegePaperSerializer
 
-# College Home View - Show Universities like GTU, HNGU
+
+# College Home View - Show Universities
 def college_home(request):
     universities = University.objects.all()
     return render(request, 'college/college_home.html', {'universities': universities})
 
 
-
-# University Detail View - Show courses of one university
+# University Detail View - Show Courses of one University
 def university_detail(request, pk):
     university = get_object_or_404(University, pk=pk)
     courses = Course.objects.filter(university=university)
     return render(request, 'college/university_detail.html', {'university': university, 'courses': courses})
 
 
-
-# Course Detail View - Show semesters of one course
+# Course Detail View - Show Subjects of one Course
 def course_detail(request, pk):
     course = get_object_or_404(Course, pk=pk)
-    semesters = Semester.objects.filter(course=course).order_by('number')
-    return render(request, 'college/course_detail.html', {'course': course, 'semesters': semesters})
+    subjects = CollegeSubject.objects.filter(course=course)
+    return render(request, 'college/course_detail.html', {'course': course, 'subjects': subjects})
 
 
-
-# Semester Detail View - Show subjects of one semester
-def semester_detail(request, pk):
-    semester = get_object_or_404(Semester, pk=pk)
-    subjects = CollegeSubject.objects.filter(semester=semester)
-    return render(request, 'college/semester_detail.html', {'semester': semester, 'subjects': subjects})
-
-
-
-# # College Subject Detail View - Show papers and solutions of one subject
-# def college_subject_detail(request, pk):
-#     subject = get_object_or_404(CollegeSubject, pk=pk)
-#     documents = CollegeDocument.objects.filter(subject=subject)
-#     return render(request, 'college/college_subject_detail.html', {'subject': subject, 'documents': documents})
-
-
-
-# College Subject Chapters View - Show only Chapters of one College Subject
-def college_subject_chapters(request, pk):
+# College Subject Books View - Direct Book PDF open
+def course_books(request, pk):
     subject = get_object_or_404(CollegeSubject, pk=pk)
-    chapters = CollegeChapter.objects.filter(subject=subject).order_by('number')
-    return render(request, 'college/college_subject_chapters.html', {'subject': subject, 'chapters': chapters})
+    book = CollegeBook.objects.filter(subject=subject).first()
+    if book:
+        return redirect(book.pdf.url)
+    return render(request, 'college/course_books.html', {'subject': subject, 'books': []})
 
 
-# College Subject Papers View - Show only Papers of one College Subject
-def college_subject_papers(request, pk):
+# College Subject Papers View - Show Old Papers of one Subject
+def course_papers(request, pk):
     subject = get_object_or_404(CollegeSubject, pk=pk)
     papers = CollegePaper.objects.filter(subject=subject).order_by('-year')
-    return render(request, 'college/college_subject_papers.html', {'subject': subject, 'papers': papers})
+    return render(request, 'college/course_papers.html', {'subject': subject, 'papers': papers})
+
+# College Subject Notes View - Show Notes list of one Subject
+def course_notes(request, pk):
+    subject = get_object_or_404(CollegeSubject, pk=pk)
+    notes = CollegeNote.objects.filter(subject=subject)
+    return render(request, 'college/course_notes.html', {'subject': subject, 'notes': notes})
+
+# //////////////////////////////////////////////////////////////////////////////
+# API Views - App ke liye, alag rakha hai
 
 
-# College Chapter Detail View - Show Books and Questions of one Chapter
-def college_chapter_detail(request, pk):
-    chapter = get_object_or_404(CollegeChapter, pk=pk)
-    documents = CollegeDocument.objects.filter(chapter=chapter).order_by('doc_type', 'title')
-    return render(request, 'college/college_chapter_detail.html', {'chapter': chapter, 'documents': documents})
-
-# /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-
-
-
-# API Views - App ke liye JSON data
 @api_view(['GET'])
 def api_universities(request):
     universities = University.objects.all()
@@ -88,43 +65,14 @@ def api_courses(request, pk):
 
 
 @api_view(['GET'])
-def api_semesters(request, pk):
-    semesters = Semester.objects.filter(course_id=pk).order_by('number')
-    serializer = SemesterSerializer(semesters, many=True)
+def api_books(request, pk):
+    books = CollegeBook.objects.filter(course_id=pk)
+    serializer = CollegeBookSerializer(books, many=True)
     return Response(serializer.data)
 
 
 @api_view(['GET'])
-def api_college_subjects(request, pk):
-    subjects = CollegeSubject.objects.filter(semester_id=pk)
-    serializer = CollegeSubjectSerializer(subjects, many=True)
-    return Response(serializer.data)
-
-
-@api_view(['GET'])
-def api_college_documents(request, pk):
-    documents = CollegeDocument.objects.filter(subject_id=pk)
-    serializer = CollegeDocumentSerializer(documents, many=True)
-    return Response(serializer.data)
-
-
-# API Views - Chapters and Papers
-@api_view(['GET'])
-def api_college_chapters(request, pk):
-    chapters = CollegeChapter.objects.filter(subject_id=pk).order_by('number')
-    serializer = CollegeChapterSerializer(chapters, many=True)
-    return Response(serializer.data)
-
-
-@api_view(['GET'])
-def api_college_papers(request, pk):
-    papers = CollegePaper.objects.filter(subject_id=pk)
+def api_papers(request, pk):
+    papers = CollegePaper.objects.filter(course_id=pk).order_by('-year')
     serializer = CollegePaperSerializer(papers, many=True)
-    return Response(serializer.data)
-
-
-@api_view(['GET'])
-def api_college_chapter_documents(request, pk):
-    documents = CollegeDocument.objects.filter(chapter_id=pk)
-    serializer = CollegeDocumentSerializer(documents, many=True)
     return Response(serializer.data)

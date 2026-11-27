@@ -1,6 +1,5 @@
-# Serializer - Convert School data to JSON for App
 from rest_framework import serializers
-from .models import SchoolClass, Subject, Document, Chapter, Paper
+from .models import SchoolClass, Subject, Book, Note, Paper
 
 
 class SchoolClassSerializer(serializers.ModelSerializer):
@@ -12,22 +11,22 @@ class SchoolClassSerializer(serializers.ModelSerializer):
 class SubjectSerializer(serializers.ModelSerializer):
     class Meta:
         model = Subject
-        fields = ['id', 'school_class', 'name']
+        fields = ['id', 'name', 'school_class']
 
 
-class DocumentSerializer(serializers.ModelSerializer):
+class BookSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Document
-        fields = ['id', 'subject', 'title', 'doc_type', 'year', 'chapter', 'solution_pdf', 'pdf']
+        model = Book
+        fields = ['id', 'title', 'subject', 'pdf']
 
 
-class ChapterSerializer(serializers.ModelSerializer):
+class NoteSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Chapter
-        fields = ['id', 'subject', 'number', 'name']
+        model = Note
+        fields = ['id', 'title', 'subject', 'pdf']
 
 
 class PaperSerializer(serializers.ModelSerializer):
     class Meta:
         model = Paper
-        fields = ['id', 'subject', 'title', 'year', 'pdf', 'solution_pdf']
+        fields = ['id', 'title', 'year', 'subject', 'pdf', 'solution_pdf']

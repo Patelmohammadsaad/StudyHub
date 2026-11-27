@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% block content %}
+<style>body{background: var(--page-bg)!important;}</style>
+
+<h1>{{ subject.name }} - Books</h1>
+
+{% for b in books %}
+<div style="background: white; border: 1px solid #E5E7EB; border-radius: 12px; padding: 16px; margin-bottom: 12px;">
+  <strong>{{ b.title }}</strong><br><br>
+  <a href="{{ b.pdf.url }}" target="_blank" style="background: var(--blue-grad); color: white; padding: 8px 16px; border-radius: 8px; text-decoration: none;">View</a>
+</div>
+{% empty %}
+<p>No books yet.</p>
+{% endfor %}
+
+<p style="margin-top: 20px;">
+    <a href="{% url 'class_detail' subject.school_class.pk %}">Back to Subjects</a>
+</p>
+
+
+{% endblock %}

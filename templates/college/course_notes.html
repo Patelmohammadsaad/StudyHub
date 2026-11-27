@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% block content %}
+<style>body{background: var(--page-bg)!important;}</style>
+
+<h1>{{ subject.name }} - Notes</h1>
+
+{% for n in notes %}
+<div style="background: white; border: 1px solid #E5E7EB; border-radius: 12px; padding: 16px; margin-bottom: 12px;">
+  <strong>{{ n.title }}</strong><br><br>
+  <a href="{{ n.pdf.url }}" target="_blank" style="background: var(--blue-grad); color: white; padding: 8px 16px; border-radius: 8px; text-decoration: none;">View</a>
+</div>
+{% empty %}
+<p>No notes yet.</p>
+{% endfor %}
+
+<p style="margin-top: 20px;"><a href="{% url 'course_detail' subject.course.pk %}">Back to Subjects</a></p>
+
+{% endblock %}

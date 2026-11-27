@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+{% block content %}
+<style>body{background: var(--page-bg)!important;}</style>
+
+<h1>{{ subject.name }} - Books</h1>
+<p>No books yet.</p>
+
+<p style="margin-top: 20px;"><a href="{% url 'course_detail' subject.course.pk %}">Back to Subjects</a></p>
+
+{% endblock %}

@@ -4,7 +4,7 @@ from django.db import models
 
 # SchoolClass Model - Stores Class 1 to 12
 class SchoolClass(models.Model):
-    number = models.IntegerField()
+    number = models.IntegerField(unique=True)
     name = models.CharField(max_length=50)
 
     def __str__(self):
@@ -19,29 +19,35 @@ class Subject(models.Model):
     def __str__(self):
         return f"{self.name} - Class {self.school_class.number}"
 
-
-# Chapter Model - Chapter of a Subject for Books, Notes and Questions
-class Chapter(models.Model):
-    subject = models.ForeignKey(Subject, on_delete=models.CASCADE)
-    number = models.IntegerField()
-    name = models.CharField(max_length=100)
-
-    def __str__(self):
-     return f"Chapter {self.number} - {self.name} ({self.subject.name} - Class {self.subject.school_class.number})"
+    class Meta:
+        unique_together = ['school_class', 'name']
 
 
-# Document Model - Old Paper or Book PDF for a Subject
-class Document(models.Model):
+# Book Model - Book PDF of one Subject
+class Book(models.Model):
     subject = models.ForeignKey(Subject, on_delete=models.CASCADE)
     title = models.CharField(max_length=200)
-    doc_type = models.CharField(max_length=20)
-    year = models.IntegerField()
-    chapter = models.ForeignKey(Chapter, on_delete=models.CASCADE, null=True, blank=True)
-    solution_pdf = models.FileField(upload_to='pdfs/', null=True, blank=True)
     pdf = models.FileField(upload_to='pdfs/')
 
     def __str__(self):
         return self.title
+
+    class Meta:
+        unique_together = ['subject', 'title']
+
+
+# Note Model - Note PDF of one Subject
+class Note(models.Model):
+    subject = models.ForeignKey(Subject, on_delete=models.CASCADE)
+    title = models.CharField(max_length=200)
+    pdf = models.FileField(upload_to='pdfs/')
+
+    def __str__(self):
+        return self.title
+
+    class Meta:
+        unique_together = ['subject', 'title']
+
 
 # Paper Model - Old Paper + Solution for a Subject
 class Paper(models.Model):
@@ -53,3 +59,6 @@ class Paper(models.Model):
 
     def __str__(self):
         return self.title
+
+    class Meta:
+        unique_together = ['subject', 'title', 'year']

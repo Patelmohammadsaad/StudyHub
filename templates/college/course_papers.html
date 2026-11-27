@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% block content %}
+<style>body{background: var(--page-bg)!important;}</style>
+
+<h1>{{ subject.name }} - Old Papers</h1>
+
+{% for p in papers %}
+<div style="background: white; border: 1px solid #E5E7EB; border-radius: 12px; padding: 16px; margin-bottom: 12px;">
+  <strong>{{ p.title }} - {{ p.year }}</strong><br><br>
+  <a href="{{ p.pdf.url }}" target="_blank" style="background: var(--blue-grad); color: white; padding: 8px 16px; border-radius: 8px; text-decoration: none;">View Paper</a>
+  {% if p.solution_pdf %}
+  <a href="{{ p.solution_pdf.url }}" target="_blank" style="background: white; color: #17191C; padding: 8px 16px; border: 1px solid #17191C; border-radius: 8px; text-decoration: none; margin-left: 8px;">View Solution</a>
+  {% endif %}
+</div>
+{% empty %}
+<p>No papers yet.</p>
+{% endfor %}
+
+<p style="margin-top: 20px;"><a href="{% url 'course_detail' subject.course.pk %}">Back to Subjects</a></p>
+
+{% endblock %}
