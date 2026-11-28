@@ -34,6 +34,7 @@ INSTALLED_APPS = [
     'core',
     'rest_framework',
     'college',
+    'corsheaders',
 
     'django.contrib.admin',
     'django.contrib.auth',
@@ -44,6 +45,8 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
+
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -134,3 +137,4 @@ MAILERS = {
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
 STATICFILES_DIRS = [BASE_DIR / "static"]
+CORS_ALLOW_ALL_ORIGINS = True
